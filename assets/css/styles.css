@@ -1,0 +1,584 @@
+/* =========================================================
+   Waterfront Equity — styles.css
+   Palette derived from the firm's business card:
+   ink navy, deep navy, warm gold, cream, bone white.
+   ========================================================= */
+
+:root {
+  --navy:        #1f2d44;
+  --navy-deep:   #16223a;
+  --navy-ink:    #101a2e;
+  --gold:        #a08a52;
+  --gold-soft:   #b9a572;
+  --cream:       #f3f0e9;
+  --bone:        #fbfaf6;
+  --paper:       #ffffff;
+  --grey:        #6b7280;
+  --grey-light:  #9aa1ac;
+  --line:        rgba(31, 45, 68, 0.14);
+  --line-light:  rgba(255, 255, 255, 0.18);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --maxw: 1180px;
+  --gutter: clamp(1.4rem, 5vw, 4rem);
+  --section-y: clamp(5rem, 11vw, 9.5rem);
+  --footer-h: 132px;
+}
+
+/* ----- Reset ----- */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--navy);
+  background: var(--bone);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ----- Shared type ----- */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+}
+.eyebrow--light { color: var(--gold-soft); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.4vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--navy-deep);
+  margin-bottom: 1.6rem;
+}
+.section-title--light { color: var(--bone); }
+
+.lead {
+  font-size: clamp(1.08rem, 1.6vw, 1.32rem);
+  line-height: 1.55;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  max-width: 42ch;
+}
+.lead--light { color: rgba(251, 250, 246, 0.82); }
+
+.col-body p { color: var(--grey); max-width: 54ch; }
+.col-body p.lead { color: var(--navy); }
+
+/* =========================================================
+   Header
+   ========================================================= */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  padding-block: 1.5rem;
+}
+.site-header.scrolled {
+  background: rgba(251, 250, 246, 0.92);
+  backdrop-filter: blur(10px);
+  padding-block: 0.9rem;
+  box-shadow: 0 1px 0 var(--line);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand { display: inline-flex; flex-direction: column; line-height: 1; }
+.brand-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.32rem;
+  letter-spacing: 0.18em;
+  color: var(--bone);
+  transition: color 0.4s ease;
+}
+.brand-sub {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.5em;
+  margin-top: 0.5rem;
+  /* WATERFRONT 아래 중앙에 좁게 모임 (명함과 동일) */
+  text-align: center;
+  text-indent: 0.5em; /* 마지막 글자 letter-spacing 보정으로 시각적 중앙 */
+  color: var(--bone);
+  transition: color 0.4s ease;
+}
+.scrolled .brand-name { color: var(--navy-deep); }
+.scrolled .brand-sub { color: var(--navy-deep); }
+
+.site-header:not(.scrolled) .brand-name,
+.site-header:not(.scrolled) .brand-sub,
+.site-header:not(.scrolled) .nav a {
+  text-shadow: 0 1px 10px rgba(16,26,46,0.5);
+}
+
+.nav { display: flex; align-items: center; gap: 2.3rem; }
+.nav a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: rgba(251, 250, 246, 0.86);
+  transition: color 0.3s ease;
+}
+.nav a:hover { color: var(--gold-soft); }
+.scrolled .nav a { color: var(--navy); }
+.scrolled .nav a:hover { color: var(--gold); }
+
+.nav-cta {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--line-light);
+  border-radius: 1px;
+}
+.scrolled .nav-cta { border-color: var(--line); }
+.nav-cta:hover { border-color: var(--gold-soft); }
+
+/* mobile toggle */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px;
+}
+.nav-toggle span {
+  width: 26px; height: 1.5px;
+  background: var(--bone);
+  transition: background 0.3s ease;
+}
+.scrolled .nav-toggle span { background: var(--navy); }
+
+.mobile-menu[hidden] { display: none; }
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem var(--gutter) 1.6rem;
+  background: rgba(251, 250, 246, 0.98);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+.mobile-menu a {
+  padding: 0.7rem 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--navy);
+  border-bottom: 1px solid var(--line);
+}
+.mobile-menu a:last-child { border-bottom: 0; }
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.hero {
+  position: relative;
+  /* 헤더(고정) 아래부터 시작, 푸터까지 한 화면에 들어오도록 */
+  min-height: calc(100svh - var(--footer-h));
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--navy-deep);
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/hero-yacht.jpg");
+  background-size: cover;
+  background-position: center 50%;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(16,26,46,0.32) 0%, rgba(16,26,46,0.12) 14%, rgba(16,26,46,0.00) 30%),
+    linear-gradient(270deg, rgba(16,26,46,0.55) 0%, rgba(16,26,46,0.22) 38%, rgba(16,26,46,0.00) 68%);
+}
+/* 텍스트를 화면 중앙선 기준 오른쪽에 하나의 블록으로 배치 */
+.hero .hero-content.container {
+  max-width: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  width: 100%;
+  max-width: 480px;
+  /* 화면 중앙쯤에 배치 — 요트 오른쪽 어두운 영역, 좌정렬 */
+  margin-left: 49%;
+  margin-right: auto;
+  text-align: left;
+}
+.hero-content > * {
+  margin-left: 0;
+  margin-right: 0;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(3rem, 6.5vw, 5.4rem);
+  line-height: 1.04;
+  letter-spacing: 0.01em;
+  color: var(--bone);
+  margin-bottom: 1.8rem;
+  text-shadow: 0 2px 24px rgba(16,26,46,0.55), 0 1px 4px rgba(16,26,46,0.4);
+}
+.hero-lede {
+  font-size: clamp(1.05rem, 1.7vw, 1.32rem);
+  line-height: 1.62;
+  color: rgba(251, 250, 246, 0.95);
+  max-width: 50ch;
+  margin-bottom: 2.6rem;
+  text-shadow: 0 1px 12px rgba(16,26,46,0.55);
+}
+.hero-lede--ko {
+  font-family: "Noto Sans KR", var(--font-body);
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.85;
+  color: rgba(251, 250, 246, 0.8);
+  margin-top: -1.4rem;
+  max-width: 40ch;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 2.1rem;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+}
+.btn--ghost {
+  color: var(--bone);
+  border: 1px solid rgba(251, 250, 246, 0.4);
+}
+.btn--ghost:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy-deep);
+}
+
+/* =========================================================
+   Generic section
+   ========================================================= */
+.section { padding-block: var(--section-y); }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 0.32fr 0.68fr;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+.col-label .eyebrow { position: sticky; top: 7rem; }
+
+/* ----- Firm ----- */
+.section--firm { background: var(--bone); }
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.2rem;
+  padding-top: 2.6rem;
+  border-top: 1px solid var(--line);
+}
+.stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+  color: var(--navy-deep);
+  line-height: 1.1;
+}
+.stat-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ----- Approach ----- */
+.section--approach { background: var(--cream); }
+.grid-approach {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(2rem, 6vw, 5.5rem);
+  align-items: center;
+}
+.approach-image {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+.approach-image img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.approach-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(16,26,46,0.08);
+}
+
+.approach-list { list-style: none; margin-top: 2.5rem; }
+.approach-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.4rem;
+  padding: 1.8rem 0;
+  border-top: 1px solid var(--line);
+}
+.approach-list li:last-child { border-bottom: 1px solid var(--line); }
+.approach-index {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--gold);
+  line-height: 1.2;
+  min-width: 1.4rem;
+}
+.approach-list h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--navy-deep);
+  margin-bottom: 0.5rem;
+}
+.approach-list p { color: var(--grey); max-width: 46ch; }
+
+/* ----- Focus (dark) ----- */
+.section--focus {
+  background: var(--navy-deep);
+  color: var(--bone);
+}
+.focus-head { max-width: 50ch; margin-bottom: 3.6rem; }
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line-light);
+  border: 1px solid var(--line-light);
+}
+.criteria-card {
+  background: var(--navy-deep);
+  padding: clamp(1.8rem, 3vw, 2.8rem);
+}
+.criteria-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 0.9rem;
+}
+.criteria-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+  line-height: 1.15;
+  color: var(--bone);
+  margin-bottom: 0.8rem;
+}
+.criteria-note {
+  font-size: 0.92rem;
+  color: rgba(251, 250, 246, 0.6);
+  max-width: 34ch;
+}
+
+/* ----- Leadership ----- */
+.section--leadership { background: var(--bone); }
+.person {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  margin-top: 2.6rem;
+  padding-top: 2.6rem;
+  border-top: 1px solid var(--line);
+}
+.person-mono {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.6rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  line-height: 1;
+  border: 1px solid var(--line);
+  width: 92px; height: 92px;
+  display: grid;
+  place-items: center;
+}
+.person-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--navy-deep);
+}
+.person-name span { font-weight: 400; color: var(--grey); font-size: 1.3rem; }
+.person-role {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0.4rem 0 1.1rem;
+}
+.person-bio { color: var(--grey); max-width: 52ch; }
+
+/* ----- Contact ----- */
+.section--contact {
+  background: var(--navy-ink);
+  color: var(--bone);
+}
+.contact-inner { max-width: 760px; }
+.contact-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1.05;
+  color: var(--bone);
+  margin-bottom: 1.4rem;
+}
+.contact-lede {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: rgba(251, 250, 246, 0.78);
+  max-width: 46ch;
+  margin-bottom: 3.4rem;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  border-top: 1px solid var(--line-light);
+  padding-top: 2.6rem;
+}
+.contact-key {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+  margin-bottom: 0.7rem;
+}
+.contact-item a,
+.contact-item span:not(.contact-key) {
+  font-size: 1.02rem;
+  color: var(--bone);
+  transition: color 0.3s ease;
+}
+.contact-item a:hover { color: var(--gold-soft); }
+
+/* ----- Footer ----- */
+.site-footer {
+  background: var(--navy-ink);
+  border-top: 1px solid var(--line-light);
+  min-height: var(--footer-h);
+  display: flex;
+  align-items: center;
+  padding-block: 1.6rem;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-brand { display: flex; flex-direction: column; line-height: 1; }
+.footer-brand .brand-name { color: var(--bone); font-size: 1.1rem; }
+.footer-brand .brand-sub { color: var(--bone); }
+.footer-legal {
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: rgba(251, 250, 246, 0.5);
+  text-align: right;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (min-width: 861px) {
+  .mobile-menu { display: none !important; }
+}
+
+@media (max-width: 860px) {
+  .nav { display: none; }
+  .nav-toggle { display: flex; }
+
+  /* 모바일: 텍스트를 전체 폭으로, 중앙선 오프셋 해제 */
+  .hero {
+    min-height: 100svh;
+    align-items: flex-start;
+  }
+  .hero-content {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+    text-align: left;
+  }
+  .hero-content > * { margin-left: 0; margin-right: auto; }
+  .hero-title { font-size: clamp(2.6rem, 11vw, 3.6rem); }
+
+  .grid-2,
+  .grid-approach { grid-template-columns: 1fr; }
+  .col-label .eyebrow { position: static; }
+
+  .grid-approach { gap: 2.5rem; }
+  .approach-image { aspect-ratio: 4 / 3; max-height: 460px; }
+
+  .criteria-grid { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: 1fr; gap: 1.8rem; }
+  .stat { display: flex; align-items: baseline; gap: 1rem; }
+  .stat-label { margin-top: 0; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-legal { text-align: left; }
+}
+
+@media (max-width: 480px) {
+  .hero-media { background-image: url("../images/hero-yacht-mobile.jpg"); }
+  .person { grid-template-columns: 1fr; gap: 1.4rem; }
+}

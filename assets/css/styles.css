@@ -546,17 +546,29 @@ a { color: inherit; text-decoration: none; }
   .nav { display: none; }
   .nav-toggle { display: flex; }
 
-  /* 모바일: 텍스트를 전체 폭으로, 중앙선 오프셋 해제 */
+  /* 모바일: 사진을 상단 배너로 축소하고, 본문은 그 아래 남색 배경에 배치 (가독성) */
   .hero {
-    min-height: 100svh;
-    align-items: flex-start;
+    min-height: auto;
+    display: block;
+    background: var(--navy-deep);
   }
+  .hero-media {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    /* 원본 비율(16:9) 그대로 보여 요트가 작게 — 잘림 없이 전경이 다 보임 */
+    aspect-ratio: 16 / 9;
+    background-position: center;
+  }
+  /* 텍스트가 더 이상 사진 위에 겹치지 않으므로 어둡게 깔던 오버레이 제거 */
+  .hero-overlay { display: none; }
   .hero-content {
+    position: relative;
     margin-left: 0;
     margin-right: 0;
     max-width: 100%;
-    padding-top: 7rem;
-    padding-bottom: 3rem;
+    padding-top: 2.6rem;
+    padding-bottom: 3.2rem;
     text-align: left;
   }
   .hero-content > * { margin-left: 0; margin-right: auto; }

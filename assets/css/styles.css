@@ -24,7 +24,7 @@
   --maxw: 1180px;
   --gutter: clamp(1.4rem, 5vw, 4rem);
   --section-y: clamp(5rem, 11vw, 9.5rem);
-  --footer-h: 132px;
+  --footer-h: 92px; /* 기존 132px의 70% — 푸터 높이 축소 */
 }
 
 /* ----- Reset ----- */
@@ -220,7 +220,8 @@ a { color: inherit; text-decoration: none; }
   inset: 0;
   background-image: url("../images/hero-yacht.jpg");
   background-size: cover;
-  background-position: center 50%;
+  /* 위쪽(돛대 꼭대기)이 잘리지 않도록 상단 기준 정렬 */
+  background-position: center top;
 }
 
 .hero-overlay {
@@ -515,7 +516,7 @@ a { color: inherit; text-decoration: none; }
   min-height: var(--footer-h);
   display: flex;
   align-items: center;
-  padding-block: 1.6rem;
+  padding-block: 1.1rem; /* 푸터 높이 축소에 맞춰 패딩도 비례 축소 */
 }
 .footer-inner {
   display: flex;
